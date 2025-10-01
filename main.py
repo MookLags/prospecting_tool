@@ -2,7 +2,7 @@
 Prospecting Buddy is a lightweight, dead-simple, offline, CRM-lite
 with a minimal learning curve created to solve the organizational
 problem of keeping track of prospects via follow-up date. 
-It's convenience is apparent during any kind of activity which makes heavy
+Its convenience is apparent during any kind of activity which makes heavy
 use of lead sourcing and lead nurturing, like outbound sales or applying
 to several jobs per day. 
 
@@ -39,19 +39,17 @@ except ImportError as e:
 
 ### SQL QUERY FUNCTIONS ###
 
-### CONNECT DB ###
 def create_table():
   '''
   Function: create_table
   Parameters: none
   Returns: void
-  Uses: Globally in line 193
-  Creates table Entries in which to store contact and followup information
+  Uses: Global
   '''
+
   with sqlite3.connect('db.db') as conn:
     cursor = conn.cursor()
 
-    ### CREATE TABLE ###
     create_table_query = '''
     CREATE TABLE IF NOT EXISTS Entries (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,7 +68,7 @@ def insert_entry(business_name, poc, contact, warmth, followup_date):
   Function: insert_entry
   Parameters: Name of Business, contact name, contact info, lead warmth, initial followup date
   Returns: void
-  Uses: Used as command in enter_button_entry in line 298
+  Uses: Used as command in enter_button_entry 
   Enters contact and followup information into database including followup date
   in yyyy-mm-dd format. Commits information to db
   '''
@@ -91,14 +89,14 @@ def get_followup_dates():
   Function: get_followup_dates
   Parameters: none
   Returns: List of all entries for which followup_date == today's date
-  Uses: First globally in line 311, second in line 313 via display_followups > render_followups > handle_update
+  Uses: First globally, second via display_followups > render_followups > handle_update
   '''
   with sqlite3.connect('db.db') as conn:
     cursor = conn.cursor()
      
     today = datetime.date.today() # If you just use DATE('now') it does not account for timezones
     # Note that there is no need to convert to ISO specifically due to the date format in which
-    # dates are being saved (see lines 180, 292)
+    # dates are being saved 
 
     get_followup_dates_query = 'SELECT * FROM Entries WHERE DATE(followup_date) = ?'
     cursor.execute(get_followup_dates_query, (today,))
@@ -109,7 +107,7 @@ def update_entry(new_date, entry_id):
   Function: update_query
   Parameters: new_date, entry_id
   Returns: void
-  Uses: Called in line 145 via function handle_update
+  Uses: Called via function handle_update
   Updates column new_date where entry_id is equal to id of the given entry.
   '''
   with sqlite3.connect('db.db') as conn:
